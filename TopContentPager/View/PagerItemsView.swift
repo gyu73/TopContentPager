@@ -47,6 +47,7 @@ final public class PagerItemsView: UIView {
     private var itemViewHeight: CGFloat = 20.0
     private var lineHeight: CGFloat = 2.0
     private var indicatorSideSpace: CGFloat = 0
+    private var pageIndex: Int = 0
 
     public var items: [PagerItem] = []
     public var itemViews: [PagerItemView] = []
@@ -122,6 +123,7 @@ final public class PagerItemsView: UIView {
     }
 
     func adjustSelected(page: Int) {
+        self.pageIndex = page
         self.itemViews.forEach {
             $0.isSelected = false
         }
@@ -146,7 +148,8 @@ final public class PagerItemsView: UIView {
         self.frontView.frame = self.bounds
 
         self.indicator.frame = CGRect(
-            x: 0, y: self.frame.size.height - self.indicatorHeight,
+            x: (CGFloat(pageIndex) * self.indicatorWidth) + self.indicatorSideSpace,
+            y: self.frame.size.height - self.indicatorHeight,
             width: self.indicatorWidth, height: self.indicatorHeight
         )
         self.lineView.frame = CGRect(x: 0, y: self.frame.size.height - lineHeight, width: self.frame.width, height: lineHeight)
